@@ -306,7 +306,7 @@
 
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
-const API_KEY = process.env.NEXT_PUBLIC_COINGECKO_API_KEY; // leave this undefined unless needed (some endpoints are public)
+const API_KEY = process.env.NEXT_PUBLIC_COINGECKO_API_KEY;
 
 // Fetch top cryptocurrencies (by market cap)
 export async function fetchTopCryptos(perPage = 5) {
@@ -317,7 +317,7 @@ export async function fetchTopCryptos(perPage = 5) {
         // Optional header if API key is required
         Authorization: `Bearer ${API_KEY}`,
       },
-      next: { revalidate: 60 }, // optional: ISR (revalidate every 60s)
+      next: { revalidate: 60 },
     }
   );
 
@@ -371,8 +371,6 @@ export async function fetchCryptoById(id) {
     ath: coin.market_data.ath.usd,
     atl: coin.market_data.atl.usd,
     description: coin.description.en,
-    features: [], // CoinGecko doesn’t provide this directly; you can hardcode or remove
-    history: "",  // Same here
     links: {
       Website: coin.links.homepage[0],
       Whitepaper: coin.links.whitepaper || "",
