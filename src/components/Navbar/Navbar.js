@@ -8,9 +8,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Listings", path: "/listings" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" }
-  ]
+    ]
 
   return (
     <header className="navbar">
