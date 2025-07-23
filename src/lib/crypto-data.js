@@ -381,6 +381,25 @@ export async function fetchCryptoById(id) {
 }
 
 
+// function for graph using recharts
+
+export async function fetchCryptoChartData(id, days = 7) {
+  const res = await fetch(
+    `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`
+  )
+
+  if (!res.ok) throw new Error("Failed to fetch chart data")
+
+  const data = await res.json()
+
+  return data.prices.map(([timestamp, price]) => ({
+    date: new Date(timestamp).toLocaleDateString(),
+    price: price,
+  }))
+}
+
+
+
 
 
 
