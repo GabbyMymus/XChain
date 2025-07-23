@@ -32,6 +32,7 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  width: 100%;
 }
 
 .main ol {
@@ -164,5 +165,84 @@ a.secondary {
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
+  }
+}
+
+/* ======= Crypto List Styling ======= */
+
+.main {
+  margin-top: 100px; /* Ensure space between Hero and list */
+}
+
+.cryptoListContainer {
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-medium);
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: 12px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.cryptoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cryptoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cryptoTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: inherit;
+}
+
+.cryptoIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.itemEven {
+  background-color: #f8f9fa; /* clean soft gray */
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.itemOdd {
+  background-color: #ffffff; /* pure white card */
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.itemEven, .itemOdd {
+  border: 1px solid #eaeaea;
+}
+
+
+.cryptoList code {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .itemEven {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .itemOdd {
+    background-color: rgba(255, 255, 255, 0.06);
   }
 }
