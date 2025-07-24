@@ -86,41 +86,41 @@ export default function FavouritesPage() {
   const router = useRouter()
 
   useEffect(() => {
-    const fetchFavourites = async () => {
-      try {
-        const favRef = doc(db, "favourites", user.uid)
-        const favSnap = await getDoc(favRef)
+    async function fetchData() {
+      if (user === null) {
+        router.push("/login")
+      } else if (user) {
+        try {
+          const favRef = doc(db, "favourites", user.uid)
+          const favSnap = await getDoc(favRef)
 
-        if (favSnap.exists()) {
-          const { coins = [] } = favSnap.data()
+          if (favSnap.exists()) {
+            const { coins = [] } = favSnap.data()
 
-          const favDetails = await Promise.all(
-            coins.map(async (id) => {
-              try {
-                return await fetchCryptoById(id)
-              } catch (err) {
-                console.error("Error fetching coin:", id, err)
-                return null
-              }
-            })
-          )
+            const favDetails = await Promise.all(
+              coins.map(async (id) => {
+                try {
+                  return await fetchCryptoById(id)
+                } catch (err) {
+                  console.error("Error fetching coin:", id, err)
+                  return null
+                }
+              })
+            )
 
-          setFavourites(favDetails.filter(Boolean))
-        } else {
-          setFavourites([])
+            setFavourites(favDetails.filter(Boolean))
+          } else {
+            setFavourites([])
+          }
+        } catch (err) {
+          console.error("Failed to fetch favourites:", err)
+        } finally {
+          setLoading(false)
         }
-      } catch (err) {
-        console.error("Failed to fetch favourites:", err)
-      } finally {
-        setLoading(false)
       }
     }
 
-    if (user === null) {
-      router.push("/login")
-    } else if (user) {
-      fetchFavourites()
-    }
+    fetchData()
   }, [user, router])
 
   return (
@@ -136,3 +136,4 @@ export default function FavouritesPage() {
     </div>
   )
 }
+
