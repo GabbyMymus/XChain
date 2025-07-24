@@ -72,7 +72,6 @@ export function CryptoList({ cryptos = [] }) {
         />
       </div>
 
-      {/* <div style={{ overflowX: "auto" }}> */}
         <table className="crypto-table">
           <thead className="table-header">
             <tr>
@@ -97,15 +96,25 @@ export function CryptoList({ cryptos = [] }) {
               <tr key={crypto.id} className="crypto-row">
                 <td className="crypto-cell" style={{ color: "#000000" }}>{index + 1}</td>
                 <td className="crypto-cell">
-                  <Link href={`/crypto/${crypto.id}`} className="crypto-name-cell">
+                  <Link href={`/crypto/${crypto.id}`} className="crypto-name-cell" style={{ textDecoration: "none" }}>
                     <div className="crypto-icon">
-                      <span className="crypto-symbol">{crypto.symbol.charAt(0)}</span>
-                    </div>
-                    <div>
-                      <div className="crypto-name">{crypto.name}</div>
-                      <div className="crypto-symbol-small">{crypto.symbol}</div>
-                    </div>
+                    <img
+                      src={crypto.image}
+                      alt={crypto.name}
+                      style={{
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      backgroundColor: "#f0f0f0",
+                      objectFit: "cover"
+                     }}/></div>
+
+                      <div>
+                        <div className="crypto-name">{crypto.name}</div>
+                        <div className="crypto-symbol-small">{crypto.symbol}</div>
+                      </div>
                   </Link>
+
                 </td>
                 <td className="crypto-cell" style={{ textAlign: "right", fontWeight: "500", color: "#10b981" }}>
                   ${crypto.price.toFixed(2)}
@@ -120,6 +129,5 @@ export function CryptoList({ cryptos = [] }) {
           </tbody>
         </table>
       </div>
-    // </div>
   )
 }

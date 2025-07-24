@@ -1,4 +1,4 @@
-.detailWrapper {
+/* .detailWrapper {
   padding: 2rem;
 }
 
@@ -26,6 +26,58 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
+}
+
+.description {
+  margin-top: 2rem;
+  line-height: 1.6;
+} */
+
+
+.detailWrapper {
+  padding: 2rem 1rem;
+  max-width: 960px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.symbol {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+}
+
+.marketInfo {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.marketInfo h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  font-size: 1rem;
 }
 
 .description {
