@@ -1,16 +1,17 @@
 "use client"
-
 import { useEffect, useState } from "react"
-import CryptoCard from "@/components/CryptoCard/CryptoCard"
+import CryptoCard from "../../components/CryptoCard/CryptoCard"
 
 export default function ListingsPage() {
   const [cryptos, setCryptos] = useState([])
   const [searchText, setSearchText] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const cryptosPerPage = 20
 
   useEffect(() => {
     async function fetchData() {
       const res = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false"
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false"
       )
       const data = await res.json()
 
@@ -34,6 +35,10 @@ export default function ListingsPage() {
     crypto.name.toLowerCase().includes(searchText.toLowerCase()) ||
     crypto.symbol.toLowerCase().includes(searchText.toLowerCase())
   )
+
+  const totalPages = Math.ceil(filtered.length / cryptosPerPage)
+  const startIndex = (currentPage - 1) * cryptosPerPage
+  const currentCryptos = filtered.slice(startIndex, startIndex + cryptosPerPage)
 
   return (
     <div className="container" style={{ padding: "2rem" }}>
@@ -61,9 +66,41 @@ export default function ListingsPage() {
         gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
         gap: "1.5rem"
       }}>
-        {filtered.map((crypto) => (
+        {currentCryptos.map((crypto) => (
           <CryptoCard key={crypto.id} crypto={crypto} />
         ))}
+      </div>
+
+      <div style={{ marginTop: "2rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          style={{
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+            background: currentPage === 1 ? "#eee" : "white",
+            cursor: currentPage === 1 ? "not-allowed" : "pointer"
+          }}
+        >
+          Prev
+        </button>
+        <span style={{ alignSelf: "center" }}>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          style={{
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+            background: currentPage === totalPages ? "#eee" : "white",
+            cursor: currentPage === totalPages ? "not-allowed" : "pointer"
+          }}
+        >
+          Next
+        </button>
       </div>
     </div>
   )

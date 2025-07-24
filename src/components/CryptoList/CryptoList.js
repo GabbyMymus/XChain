@@ -72,7 +72,7 @@ export function CryptoList({ cryptos = [] }) {
         />
       </div>
 
-      <div style={{ overflowX: "auto" }}>
+      {/* <div style={{ overflowX: "auto" }}> */}
         <table className="crypto-table">
           <thead className="table-header">
             <tr>
@@ -120,6 +120,6 @@ export function CryptoList({ cryptos = [] }) {
           </tbody>
         </table>
       </div>
-    </div>
+    // </div>
   )
 }

@@ -1,34 +1,57 @@
 "use client"
 
 import Link from "next/link"
+import { useAuth } from "../../lib/AuthContext"
+import { useRouter } from "next/navigation"
+import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore"
+import { db } from "@/firebase/config"
+import { useState } from "react"
+import { AiOutlineStar, AiFillStar } from "react-icons/ai"
+import "./CryptoCard.css"
 
 export default function CryptoCard({ crypto }) {
+  const { user } = useAuth()
+  const router = useRouter()
+  const [favourited, setFavourited] = useState(false)
+
+  const toggleFavourite = async (e) => {
+    e.preventDefault()
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    const favRef = doc(db, "favourites", user.uid)
+    const snapshot = await getDoc(favRef)
+
+    if (!snapshot.exists()) {
+      await setDoc(favRef, { coins: [crypto.id] })
+    } else {
+      await updateDoc(favRef, {
+        coins: arrayUnion(crypto.id),
+      })
+    }
+
+    setFavourited(true)
+  }
+
   return (
-    <Link
-      href={`/crypto/${crypto.id}`}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: "1rem",
-        borderRadius: "1rem",
-        backgroundColor: "#f9f9f9",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        textDecoration: "none",
-        color: "#111"
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+    <Link href={`/crypto/${crypto.id}`} className="crypto-card">
+      <button className="fav-button" onClick={toggleFavourite}>
+        {favourited ? <AiFillStar color="#facc15" size={20} /> : <AiOutlineStar size={20} />}
+      </button>
+
+      <div className="card-header">
         <img src={crypto.image} alt={crypto.name} width={40} height={40} />
         <div>
-          <div style={{ fontSize: "1.1rem", fontWeight: "600" }}>{crypto.name}</div>
-          <div style={{ fontSize: "0.9rem", color: "#666" }}>{crypto.symbol}</div>
+          <div className="crypto-name">{crypto.name}</div>
+          <div className="crypto-symbol">{crypto.symbol}</div>
         </div>
       </div>
 
-      <div style={{ fontSize: "1rem", fontWeight: "500", color: "#10b981" }}>
+      <div className="crypto-price">
         {crypto.price !== undefined ? `$${crypto.price.toFixed(2)}` : "Price N/A"}
       </div>
-
     </Link>
   )
 }
