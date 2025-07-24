@@ -45,8 +45,9 @@ export default function LoginPage() {
         {error && <div className="error">{error}</div>}
         <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
         <p>
-          Don't have an account? <Link href="/signup">Sign up</Link>
+        {"Don't have an account?"} <Link href="/signup">Sign up</Link>
         </p>
+
       </form>
     </div>
   )
