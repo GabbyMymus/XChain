@@ -6,10 +6,6 @@ export default function HeroSection() {
           Stay updated with the latest cryptocurrency prices, market caps, and trends. Make informed decisions with
           comprehensive market data.
         </p>
-        <div className="hero-buttons">
-          <button className="button-primary">Get Started</button>
-          <button className="button-secondary">Learn More</button>
-        </div>
       </section>
     )
   }
